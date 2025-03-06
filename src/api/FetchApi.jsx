@@ -1,4 +1,5 @@
-import { axiosInstance, handleError } from "./Config"
+import { axiosInstance, handleError } from "./MyConfig";
+
 
 export const FetchApi = async(payload) => {
     try{
