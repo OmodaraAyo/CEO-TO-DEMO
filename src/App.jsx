@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import "./App.css";
-import { dataApi } from "./api/dataAPI.JSX";
+import { dataApi } from "./api/DataAPI.jsx";
 
 function App() {
   const [inputText, setInputText] = useState("");

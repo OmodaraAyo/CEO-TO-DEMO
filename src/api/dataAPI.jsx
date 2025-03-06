@@ -1,5 +1,5 @@
 import axios from "axios"
-import { axiosInstance, handleError } from "./config"
+import { axiosInstance, handleError } from "./Config"
 
 export const dataApi = async(payload) => {
     try{
