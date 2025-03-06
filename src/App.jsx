@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import "./App.css";
-import { dataApi } from "./api/DataAPI.jsx";
+import { FetchApi } from "./api/FetchApi";
+
 
 function App() {
   const [inputText, setInputText] = useState("");
@@ -24,7 +25,7 @@ function App() {
     const payload = { dataQuery };
 
     try {
-      const result = await dataApi(payload);
+      const result = await FetchApi(payload);
       setResponse(result);
       setError(null);
     } catch (err) {

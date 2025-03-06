@@ -1,7 +1,6 @@
-import axios from "axios"
 import { axiosInstance, handleError } from "./Config"
 
-export const dataApi = async(payload) => {
+export const FetchApi = async(payload) => {
     try{
         const response = await axiosInstance.post('/getCeo', payload)
         return response.data
