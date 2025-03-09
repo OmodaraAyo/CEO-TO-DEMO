@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { FetchApi } from "./api/FetchApi";
 import { IoCloseSharp } from "react-icons/io5";
@@ -14,6 +14,21 @@ function App() {
   const [inputText, setInputText] = useState("");
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const savedResponse = localStorage.getItem("response");
+    if (savedResponse) {
+      setResponse(JSON.parse(savedResponse));
+    }
+  }, [])
+
+  useEffect(() => {
+    if(response){
+      localStorage.setItem("response", JSON.stringify(response));
+    }else{
+      localStorage.removeItem("response");
+    }
+  }, [response]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
