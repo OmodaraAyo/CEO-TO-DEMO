@@ -12,7 +12,7 @@ const importJsPDF = () => import("jspdf");
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [response, setResponse] = useState([]);
+  const [response, setResponse] = useState(["a", "b", "c"]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -108,6 +108,12 @@ function App() {
     doc.save("cto-data.pdf");
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  }
   return (
     <section className="flex flex-col justify-center w-full h-svh">
       <form onSubmit={handleSubmit}>
@@ -117,6 +123,7 @@ function App() {
             id="dataInput"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
+            onKeyDown={handleKeyDown}
             className="border-2 rounded-full px-7 pt-5 pb-0.5 resize-none outline-none overflow-y-scroll no-scrollbar transform transition-all duration-300 ease-in-out"
             placeholder="Paste your data here"
           ></textarea>
@@ -163,7 +170,7 @@ function App() {
               onClick={() => setResponse([])}
             />
           </div>
-          <div className="overflow-y-auto">
+          <div className="overflow-y-auto bg-amber-100 rounded-lg scrollbar-custom h-[calc(100vh-220px)]">
             {response.map((item, index) => (
               <div key={index} className="mb-4">
                 <pre className="text-green-950 mb-4 whitespace-pre-wrap break-words p-3 flex flex-col">
@@ -176,7 +183,7 @@ function App() {
           </div>
           <button
             onClick={() => downloadResponseAsPdf(response)}
-            className={`border rounded-full w-full max-w-44 flex place-self-center justify-center items-center gap-2 italic font-semibold cursor-pointer py-1 overflow-hidden hover:border-green-800 hover:text-white hover:bg-green-800 active:border-green-950 active:text-gray-400 transform transition-all duration-300 ease-in-out`}
+            className={`border rounded-full w-full h-9 max-w-44 flex place-self-center justify-center items-center gap-2 italic font-semibold cursor-pointer py-1 overflow-hidden hover:border-green-800 hover:text-white hover:bg-green-800 active:border-green-950 active:text-gray-400 transform transition-all duration-300 ease-in-out`}
           >
             <GrDocumentDownload />
             <p>Download...</p>
