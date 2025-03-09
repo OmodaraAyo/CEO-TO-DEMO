@@ -150,16 +150,16 @@ function App() {
                   <p>{item.ceoName}</p>
                   {/* {JSON.stringify(response, null, 2)} */}
                 </pre>
-                <button
-                  onClick={() => downloadResponseAsPdf(response)}
-                  className={`border rounded-full w-full max-w-44 flex place-self-center justify-center items-center gap-2 italic font-semibold cursor-pointer py-1 overflow-hidden hover:border-green-800 hover:text-white hover:bg-green-800 active:border-green-950 active:text-gray-400 transform transition-all duration-300 ease-in-out`}
-                >
-                  <GrDocumentDownload />
-                  <p>Download...</p>
-                </button>
               </div>
             ))}
           </div>
+          <button
+            onClick={() => downloadResponseAsPdf(response)}
+            className={`border rounded-full w-full max-w-44 flex place-self-center justify-center items-center gap-2 italic font-semibold cursor-pointer py-1 overflow-hidden hover:border-green-800 hover:text-white hover:bg-green-800 active:border-green-950 active:text-gray-400 transform transition-all duration-300 ease-in-out`}
+          >
+            <GrDocumentDownload />
+            <p>Download...</p>
+          </button>
         </motion.div>
       )}
     </section>
