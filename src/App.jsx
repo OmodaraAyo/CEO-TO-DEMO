@@ -65,25 +65,21 @@ function App() {
     doc.setFontSize("12");
 
     doc.text("Response Data", 10, 10);
-    const text = JSON.stringify(data, null, 2);
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 10;
-    const maxWidth = pageWidth - margin * 2;
-    const lines = doc.splitTextToSize(text, maxWidth);
-
     let y = 20;
-    const lineHeight = 10;
-    const pageHeight = doc.internal.pageSize.getHeight();
 
-    lines.forEach((line) => {
-      if (y + lineHeight > pageHeight - margin) {
-        doc.addPage();
-        y = margin;
-      }
-      doc.text(line, margin, y);
-      y += lineHeight;
+    data.forEach((item) => {
+      const text = `${item.actualInput}\n${item.ceoName}`;
+      const lines = doc.splitTextToSize(text, doc.internal.pageSize.getWidth() - 20);
+
+      lines.forEach((line) => {
+        if(y + 10 > doc.internal.pageSize.getHeight() - 10){
+          doc.addPage();
+          y = 10;
+        }
+          doc.text(line, 10, y);
+          y += 10;
+      });
     });
-
     doc.save("cto-data.pdf");
   };
 
