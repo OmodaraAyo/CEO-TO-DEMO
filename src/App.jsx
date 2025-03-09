@@ -12,9 +12,7 @@ const importJsPDF = () => import("jspdf");
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [response, setResponse] = useState(
-    "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-  );
+  const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
