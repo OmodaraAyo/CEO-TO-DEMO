@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.11",
-    "axios": "^1.8.1",
+    "axios": "^1.8.2",
     "jspdf": "^3.0.0",
     "ldrs": "^1.1.2",
     "motion": "^12.4.10",
