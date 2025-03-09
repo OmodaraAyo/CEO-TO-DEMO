@@ -49,7 +49,7 @@ function App() {
     doc.setFont("helvetica");
     doc.setFontSize("12");
 
-    doc.text(`Response Data`, 10, 10);
+    doc.text('Response Data', 10, 10);
     const text = JSON.stringify(data, null, 2)
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 10;
@@ -57,7 +57,7 @@ function App() {
     const lines = doc.splitTextToSize(text, maxWidth);
 
 
-    let y = margin;
+    let y = 20;
     const lineHeight = 10;
     const pageHeight = doc.internal.pageSize.getHeight();
 
