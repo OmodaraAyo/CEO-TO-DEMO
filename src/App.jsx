@@ -66,20 +66,44 @@ function App() {
     doc.setFontSize(18)
     doc.text("Response Data", 10, 10);
 
-    doc.setFont("helvetica");
+    const pageWidth = doc.internal.pageSize.getHeight();
+    const margin = 10;
+    const maxWidth = pageWidth - margin * 2;
+
+    const titleLines = doc.splitTextToSize("Response Data", maxWidth);
+    doc.text(titleLines, margin, margin);
+
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
-    
-    let y = 20;
+
+    let y = margin + titleLines.length * 10;
 
     data.forEach((item) => {
       doc.setFont("helvetica", "bold");
-      doc.text(`${item.actualInput}`, 10, y);
-      y +=10;
+      const actual = `${item.actualInput}`;
+      const actualLines = doc.splitTextToSize(actual, maxWidth);
+      actualLines.forEach((lines) => {
+        if(y + 10 > doc.internal.pageSize.getHeight() - margin){
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(lines, margin, y);
+        y += 10;
+      })
 
+    
       doc.setFont("helvetica", "normal");
-      doc.text(`${item.ceoName}`, 10, y);
-      y += 10;
-    })
+      const ceoText = `${item.ceoName}`;
+      const ceoLines = doc.splitTextToSize(ceoText, maxWidth);
+      ceoLines.forEach((lines) => {
+        if(y + 10 > doc.internal.pageSize.getHeight() - margin){
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(lines, margin, y);
+        y += 10;
+      });
+    });
     doc.save("cto-data.pdf");
   };
 
