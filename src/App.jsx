@@ -33,9 +33,6 @@ function App() {
     try {
       setIsLoading(true);
       const result = await FetchApi(payload);
-      // setTimeout(() => {
-        
-      // }, 40000);
       setResponse(result);
       setInputText("");
     } catch (err) {
