@@ -12,7 +12,7 @@ const importJsPDF = () => import("jspdf");
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -20,12 +20,12 @@ function App() {
     if (savedResponse) {
       setResponse(JSON.parse(savedResponse));
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if(response){
+    if (response) {
       localStorage.setItem("response", JSON.stringify(response));
-    }else{
+    } else {
       localStorage.removeItem("response");
     }
   }, [response]);
@@ -64,26 +64,25 @@ function App() {
     doc.setFont("helvetica");
     doc.setFontSize("12");
 
-    doc.text('Response Data', 10, 10);
-    const text = JSON.stringify(data, null, 2)
+    doc.text("Response Data", 10, 10);
+    const text = JSON.stringify(data, null, 2);
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 10;
     const maxWidth = pageWidth - margin * 2;
     const lines = doc.splitTextToSize(text, maxWidth);
-
 
     let y = 20;
     const lineHeight = 10;
     const pageHeight = doc.internal.pageSize.getHeight();
 
     lines.forEach((line) => {
-      if (y + lineHeight > pageHeight - margin){
+      if (y + lineHeight > pageHeight - margin) {
         doc.addPage();
         y = margin;
       }
       doc.text(line, margin, y);
       y += lineHeight;
-    })
+    });
 
     doc.save("cto-data.pdf");
   };
@@ -130,7 +129,7 @@ function App() {
         </motion.div>
       )}
 
-      {response && (
+      {response.length > 0 && (
         <motion.div
           transition={{ duration: 0.2 }}
           className="fixed w-full h-full bg-amber-100 rounded p-8 flex flex-col gap-3.5 mx-auto"
@@ -140,20 +139,26 @@ function App() {
             <IoCloseSharp
               className="cursor-pointer transform scale-105 text-green-800 drop-shadow-lg hover:text-red-500 active:text-green-950"
               size={32}
-              onClick={() => setResponse("")}
+              onClick={() => setResponse([])}
             />
           </div>
-          <div className="overflow-hidden">
-            <pre className="text-green-950 mb-4 whitespace-pre-wrap break-words p-3">
-              {JSON.stringify(response, null, 2)}
-            </pre>
-            <button
-              onClick={() => downloadResponseAsPdf(response)}
-              className={`border rounded-full w-full max-w-44 flex place-self-center justify-center items-center gap-2 italic font-semibold cursor-pointer py-1 overflow-hidden hover:border-green-800 hover:text-white hover:bg-green-800 active:border-green-950 active:text-gray-400 transform transition-all duration-300 ease-in-out`}
-            >
-              <GrDocumentDownload />
-              <p>Download...</p>
-            </button>
+          <div className="overflow-y-auto">
+            {response.map((item, index) => (
+              <div key={index} className="mb-4">
+                <pre className="text-green-950 mb-4 whitespace-pre-wrap break-words p-3 flex flex-col">
+                  <p>{item.actualInput}</p>
+                  <p>{item.ceoName}</p>
+                  {/* {JSON.stringify(response, null, 2)} */}
+                </pre>
+                <button
+                  onClick={() => downloadResponseAsPdf(response)}
+                  className={`border rounded-full w-full max-w-44 flex place-self-center justify-center items-center gap-2 italic font-semibold cursor-pointer py-1 overflow-hidden hover:border-green-800 hover:text-white hover:bg-green-800 active:border-green-950 active:text-gray-400 transform transition-all duration-300 ease-in-out`}
+                >
+                  <GrDocumentDownload />
+                  <p>Download...</p>
+                </button>
+              </div>
+            ))}
           </div>
         </motion.div>
       )}
