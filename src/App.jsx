@@ -61,25 +61,25 @@ function App() {
   const downloadResponseAsPdf = async (data) => {
     const { default: jsPDF } = await importJsPDF();
     const doc = new jsPDF();
-    doc.setFont("helvetica");
-    doc.setFontSize("12");
 
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18)
     doc.text("Response Data", 10, 10);
+
+    doc.setFont("helvetica");
+    doc.setFontSize(12);
+    
     let y = 20;
 
     data.forEach((item) => {
-      const text = `${item.actualInput}\n${item.ceoName}`;
-      const lines = doc.splitTextToSize(text, doc.internal.pageSize.getWidth() - 20);
+      doc.setFont("helvetica", "bold");
+      doc.text(`${item.actualInput}`, 10, y);
+      y +=10;
 
-      lines.forEach((line) => {
-        if(y + 10 > doc.internal.pageSize.getHeight() - 10){
-          doc.addPage();
-          y = 10;
-        }
-          doc.text(line, 10, y);
-          y += 10;
-      });
-    });
+      doc.setFont("helvetica", "normal");
+      doc.text(`${item.ceoName}`, 10, y);
+      y += 10;
+    })
     doc.save("cto-data.pdf");
   };
 
