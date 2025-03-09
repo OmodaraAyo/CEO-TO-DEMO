@@ -81,7 +81,7 @@ function App() {
 
     data.forEach((item) => {
       doc.setFont("helvetica", "bold");
-      const actual = `${item.actualInput}`;
+      const actual = `${item.ceoName}`;
       const actualLines = doc.splitTextToSize(actual, maxWidth);
       actualLines.forEach((lines) => {
         if(y + 10 > doc.internal.pageSize.getHeight() - margin){
@@ -94,7 +94,7 @@ function App() {
 
     
       doc.setFont("helvetica", "normal");
-      const ceoText = `${item.ceoName}`;
+      const ceoText = `${item.actualInput}`;
       const ceoLines = doc.splitTextToSize(ceoText, maxWidth);
       ceoLines.forEach((line) => {
         if(y + 10 > doc.internal.pageSize.getHeight() - margin){
@@ -167,8 +167,8 @@ function App() {
             {response.map((item, index) => (
               <div key={index} className="mb-4">
                 <pre className="text-green-950 mb-4 whitespace-pre-wrap break-words p-3 flex flex-col">
-                  <p>{item.actualInput}</p>
                   <p>{item.ceoName}</p>
+                  <p>{item.actualInput}</p>
                   {/* {JSON.stringify(response, null, 2)} */}
                 </pre>
               </div>
