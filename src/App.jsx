@@ -64,19 +64,20 @@ function App() {
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18)
-    doc.text("Response Data", 10, 10);
 
-    const pageWidth = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 10;
     const maxWidth = pageWidth - margin * 2;
+    
 
-    const titleLines = doc.splitTextToSize("Response Data", maxWidth);
+    const title = "Response Data"
+    const titleLines = doc.splitTextToSize(title, maxWidth);
     doc.text(titleLines, margin, margin);
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
 
-    let y = margin + titleLines.length * 10;
+    let y = margin + titleLines.length * 10 + 10;
 
     data.forEach((item) => {
       doc.setFont("helvetica", "bold");
@@ -95,12 +96,12 @@ function App() {
       doc.setFont("helvetica", "normal");
       const ceoText = `${item.ceoName}`;
       const ceoLines = doc.splitTextToSize(ceoText, maxWidth);
-      ceoLines.forEach((lines) => {
+      ceoLines.forEach((line) => {
         if(y + 10 > doc.internal.pageSize.getHeight() - margin){
           doc.addPage();
           y = margin;
         }
-        doc.text(lines, margin, y);
+        doc.text(line, margin, y);
         y += 10;
       });
     });
