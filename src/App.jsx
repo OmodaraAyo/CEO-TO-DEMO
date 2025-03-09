@@ -58,54 +58,16 @@ function App() {
     }
   };
 
-  const downloadResponseAsPdf = async (data) => {
-    const { default: jsPDF } = await importJsPDF();
-    const doc = new jsPDF();
-
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(18)
-
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 10;
-    const maxWidth = pageWidth - margin * 2;
+  const downloadResponseAsTextFile =  (data) => {
+    const textContent = data.map((item) => `${item.actualInput}\n${item.ceoName}\n\n`).join("");
     
-
-    const title = "Response Data"
-    const titleLines = doc.splitTextToSize(title, maxWidth);
-    doc.text(titleLines, margin, margin);
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-
-    let y = margin + titleLines.length * 10 + 10;
-
-    data.forEach((item) => {
-      doc.setFont("helvetica", "bold");
-      const actual = `${item.ceoName}`;
-      const actualLines = doc.splitTextToSize(actual, maxWidth);
-      actualLines.forEach((lines) => {
-        if(y + 10 > doc.internal.pageSize.getHeight() - margin){
-          doc.addPage();
-          y = margin;
-        }
-        doc.text(lines, margin, y);
-        y += 10;
-      })
-
+    const blob = new Blob([textContent], {type: 'text/plain'});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "cto-to-demo.txt";
+    link.click();
     
-      doc.setFont("helvetica", "normal");
-      const ceoText = `${item.actualInput}`;
-      const ceoLines = doc.splitTextToSize(ceoText, maxWidth);
-      ceoLines.forEach((line) => {
-        if(y + 10 > doc.internal.pageSize.getHeight() - margin){
-          doc.addPage();
-          y = margin;
-        }
-        doc.text(line, margin, y);
-        y += 10;
-      });
-    });
-    doc.save("cto-data.pdf");
+    URL.revokeObjectURL(link.href);
   };
 
   const handleKeyDown = (e) => {
@@ -182,7 +144,7 @@ function App() {
             ))}
           </div>
           <button
-            onClick={() => downloadResponseAsPdf(response)}
+            onClick={() => downloadResponseAsTextFile(response)}
             className={`border rounded-full w-full h-9 max-w-44 flex place-self-center justify-center items-center gap-2 italic font-semibold cursor-pointer py-1 overflow-hidden hover:border-green-800 hover:text-white hover:bg-green-800 active:border-green-950 active:text-gray-400 transform transition-all duration-300 ease-in-out`}
           >
             <GrDocumentDownload />
