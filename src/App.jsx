@@ -8,11 +8,9 @@ import { motion } from "motion/react";
 import { lineSpinner } from "ldrs";
 lineSpinner.register();
 
-const importJsPDF = () => import("jspdf");
-
 function App() {
   const [inputText, setInputText] = useState("");
-  const [response, setResponse] = useState(["a", "b", "c"]);
+  const [response, setResponse] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
