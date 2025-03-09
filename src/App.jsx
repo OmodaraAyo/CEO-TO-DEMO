@@ -46,9 +46,29 @@ function App() {
   const downloadResponseAsPdf = async (data) => {
     const { default: jsPDF } = await importJsPDF();
     const doc = new jsPDF();
+    doc.setFont("helvetica");
+    doc.setFontSize("12");
 
     doc.text(`Response Data`, 10, 10);
-    doc.text(JSON.stringify(data, null, 2), 10, 20);
+    const text = JSON.stringify(data, null, 2)
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 10;
+    const maxWidth = pageWidth - margin * 2;
+    const lines = doc.splitTextToSize(text, maxWidth);
+
+
+    let y = margin;
+    const lineHeight = 10;
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    lines.forEach((line) => {
+      if (y + lineHeight > pageHeight - margin){
+        doc.addPage();
+        y = margin;
+      }
+      doc.text(line, margin, y);
+      y += lineHeight;
+    })
 
     doc.save("cto-data.pdf");
   };
