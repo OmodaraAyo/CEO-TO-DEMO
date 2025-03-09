@@ -57,7 +57,7 @@ function App() {
   };
 
   const downloadResponseAsTextFile =  (data) => {
-    const textContent = data.map((item) => `${item.actualInput}\n${item.ceoName}\n\n`).join("");
+    const textContent = data.map((item) => `${item.ceoName}\n${item.actualInput}\n\n`).join("");
     
     const blob = new Blob([textContent], {type: 'text/plain'});
     const link = document.createElement("a");
