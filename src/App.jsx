@@ -12,7 +12,9 @@ const importJsPDF = () => import("jspdf");
 
 function App() {
   const [inputText, setInputText] = useState("");
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState(
+    "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -36,7 +38,7 @@ function App() {
       setTimeout(() => {
         setResponse(result);
         setIsLoading(false);
-      }, 60000);
+      }, 40000);
 
       setInputText("");
     } catch (err) {
@@ -66,7 +68,7 @@ function App() {
             id="dataInput"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            className="border-2 rounded-full px-7 pt-5 pb-0.5 resize-none outline-none overflow-y-scroll no-scrollbar align-middle"
+            className="border-2 rounded-full px-7 pt-5 pb-0.5 resize-none outline-none overflow-y-scroll no-scrollbar transform transition-all duration-300 ease-in-out"
             placeholder="Paste your data here"
           ></textarea>
           <button
@@ -102,7 +104,7 @@ function App() {
       {response && (
         <motion.div
           transition={{ duration: 0.2 }}
-          className="fixed w-full h-full bg-amber-100 rounded p-8 flex flex-col gap-3.5"
+          className="fixed w-full h-full bg-amber-100 rounded p-8 flex flex-col gap-3.5 mx-auto"
         >
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-green-800 font-bold text-xl">Response:</h3>
@@ -112,8 +114,8 @@ function App() {
               onClick={() => setResponse("")}
             />
           </div>
-          <div>
-            <pre className="text-green-950 mb-4">
+          <div className="overflow-hidden">
+            <pre className="text-green-950 mb-4 whitespace-pre-wrap break-words p-3">
               {JSON.stringify(response, null, 2)}
             </pre>
             <button
